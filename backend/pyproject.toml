@@ -1,0 +1,47 @@
+[tool.poetry]
+name = "voice-technician-assistant"
+version = "0.1.0"
+description = "AI-powered Voice Technician Assistant Backend"
+authors = ["Voice Bot Team"]
+readme = "README.md"
+packages = [{include = "app"}]
+
+[tool.poetry.dependencies]
+python = "^3.13"
+fastapi = "^0.111.0"
+uvicorn = {extras = ["standard"], version = "^0.30.1"}
+pydantic = "^2.9.2"
+pydantic-settings = "^2.5.2"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.31"}
+asyncpg = "^0.30.0"
+redis = {extras = ["hiredis"], version = "^5.0.7"}
+alembic = "^1.13.2"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+bcrypt = "^4.1.3"
+anthropic = "^0.29.0"
+langgraph = "^0.1.4"
+websockets = "^12.0"
+python-multipart = "^0.0.9"
+structlog = "^24.2.0"
+numpy = "^1.26.4"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.2"
+pytest-asyncio = "^0.23.7"
+ruff = "^0.4.10"
+black = "^24.4.2"
+mypy = "^1.10.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+target-version = ['py312']
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+select = ["E", "F", "B", "I"]

@@ -1,0 +1,10 @@
+Summarize the following technician issue report into a concise title and description suitable for a ticket.
+
+Report:
+{report}
+
+Return JSON format:
+{{
+  "title": "Short title",
+  "description": "Summary of the issue details"
+}}

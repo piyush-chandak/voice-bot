@@ -1,0 +1,45 @@
+# ============================================================
+# voice-bot — Full-stack docker-compose
+# ============================================================
+# Services
+#   livekit  — LiveKit SFU server (local dev)
+#   redis    — Session / memory store for FastAPI
+#
+# The FastAPI backend and frontend are run directly on your
+# host machine (hot-reload). Start them with `make run`.
+# ============================================================
+
+services:
+
+  # ----------------------------------------------------------
+  # LiveKit SFU Server
+  # ----------------------------------------------------------
+  livekit:
+    image: livekit/livekit-server:latest
+    command: --config /etc/livekit.yaml
+    ports:
+      - "7880:7880"       # HTTP / WebSocket
+      - "7881:7881"       # TCP RTC
+      - "50000-50100:50000-50100/udp"  # UDP RTC media
+    volumes:
+      - ./livekit/livekit.yaml:/etc/livekit.yaml:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:7880/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------------------------------------
+  # Redis — used by FastAPI session / memory service
+  # ----------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
